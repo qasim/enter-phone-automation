@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for
+from flask import Flask, Response, redirect, url_for
 from twilio.twiml.voice_response import VoiceResponse
 
 
@@ -20,7 +20,7 @@ def approve():
     resp.play('', digits='9')
     resp.redirect(url_for('approve'))
 
-    return str(resp)
+    return Response(str(resp), mimetype='text/xml')
 
 
 @app.route("/reject", methods=['GET', 'POST'])
@@ -30,7 +30,7 @@ def reject():
     resp = VoiceResponse()
     resp.hangup()
 
-    return str(resp)
+    return Response(str(resp), mimetype='text/xml')
 
 
 if __name__ == "__main__":
