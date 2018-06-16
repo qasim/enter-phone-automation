@@ -16,7 +16,7 @@ def approve_response():
     """Response to approve a buzzer request"""
 
     resp = VoiceResponse()
-    resp.play(digits='9', loop=16)
+    resp.play('', digits='w9', loop=0)
 
     return str(resp)
 
