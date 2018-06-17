@@ -13,7 +13,7 @@ def answer():
     # Forward calls that don't originate from the buzzer system to my
     # personal phone number (for emergency purposes)
     if request.args.get('From') != getenv('BUZZER_PHONE_NUMBER'):
-        return redirect(url_for('forward?to=%s' % getenv('MY_PHONE_NUMBER')))
+        return redirect(url_for('forward', to=getenv('MY_PHONE_NUMBER')))
 
     # TODO: Submit notification to phone. Based on user action, redirect
     # to the appropriate choice between 'approve', 'deny', or 'forward'
