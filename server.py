@@ -1,3 +1,4 @@
+from os import getenv
 from flask import Flask, Response, redirect, url_for, request
 from twilio.twiml.voice_response import VoiceResponse
 
@@ -8,6 +9,11 @@ app = Flask(__name__)
 @app.route("/answer", methods=['GET', 'POST'])
 def answer():
     """Respond to an incoming buzzer request"""
+
+    # Forward calls that don't originate from the buzzer system to my
+    # personal phone number (for emergency purposes)
+    if request.args.get('From') != getenv('BUZZER_PHONE_NUMBER'):
+        return redirect(url_for('forward?to=%s' % getenv('MY_PHONE_NUMBER')))
 
     # TODO: Submit notification to phone. Based on user action, redirect
     # to the appropriate choice between 'approve', 'reject', or 'forward'
@@ -50,7 +56,7 @@ def reject():
     resp = VoiceResponse()
 
     # Dial the designated phone number
-    resp.dial(request.args.get('number'))
+    resp.dial(request.args.get('to'))
 
     return Response(str(resp), mimetype='text/xml')
 
