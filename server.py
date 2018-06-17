@@ -16,7 +16,7 @@ def answer():
         return redirect(url_for('forward?to=%s' % getenv('MY_PHONE_NUMBER')))
 
     # TODO: Submit notification to phone. Based on user action, redirect
-    # to the appropriate choice between 'approve', 'reject', or 'forward'
+    # to the appropriate choice between 'approve', 'deny', or 'forward'
 
     return redirect(url_for('approve'))
 
@@ -37,20 +37,20 @@ def approve():
     return Response(str(resp), mimetype='text/xml')
 
 
-@app.route("/reject", methods=['GET', 'POST'])
-def reject():
-    """Reject a buzzer request"""
+@app.route("/deny", methods=['GET', 'POST'])
+def deny():
+    """Deny a buzzer request"""
 
     resp = VoiceResponse()
 
-    # Hanging up the phone call will reject the buzzer request
+    # Hanging up the phone call will deny the buzzer request
     resp.hangup()
 
     return Response(str(resp), mimetype='text/xml')
 
 
 @app.route("/forward", methods=['GET', 'POST'])
-def reject():
+def forward():
     """Forward a buzzer request to a designated phone number"""
 
     resp = VoiceResponse()
